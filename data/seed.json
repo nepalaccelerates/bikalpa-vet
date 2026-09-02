@@ -1,0 +1,92 @@
+{
+  "_seq": {
+    "services": 12,
+    "pharmacy": 10,
+    "petshop": 10,
+    "blogs": 4,
+    "admins": 1
+  },
+  "admins": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "$2a$10$8bwDtMIO0EBHimQ16L7JhOdYtnmNyPbjEJF1WOw4EhlH4OIZa4v4m"
+    }
+  ],
+  "services": [
+    { "id": 1,  "title": "Microchipping",        "category": "Preventive Care",  "icon": "microchip",   "price": "From Rs. 2,500", "description": "A rice-grain microchip placed beneath the skin in seconds. Permanent, internationally readable identification — the single most reliable way to bring a lost pet home.", "image": null, "created_at": "2026-04-13T10:00:01Z" },
+    { "id": 2,  "title": "Wellness Consultation","category": "Preventive Care",  "icon": "stethoscope", "price": "From Rs. 500",   "description": "A thorough, unhurried examination with one of our veterinarians. We look beyond the obvious — coat, weight, dental health, behaviour, and bloodwork when needed.", "image": null, "created_at": "2026-04-13T10:00:02Z" },
+    { "id": 3,  "title": "Vaccinations",         "category": "Preventive Care",  "icon": "syringe",     "price": "Rs. 800 – 2,000","description": "Tailored protocols for puppies, kittens and adults — Rabies, DHPP, Leptospirosis for dogs, FVRCP for cats — calibrated to age and lifestyle.", "image": null, "created_at": "2026-04-13T10:00:03Z" },
+    { "id": 4,  "title": "Parasite Control",     "category": "Preventive Care",  "icon": "shield",      "price": "From Rs. 300",   "description": "Year-round protection against internal and external parasites. Deworming, flea, tick and mite treatments matched to environment and risk.", "image": null, "created_at": "2026-04-13T10:00:04Z" },
+    { "id": 5,  "title": "Major Surgery",        "category": "Surgical Services","icon": "scalpel",     "price": "From Rs. 8,000", "description": "Spay and neuter, soft-tissue surgery, orthopaedic repair, mass removal — performed in our sterile suite under continuous anaesthesia monitoring.", "image": null, "created_at": "2026-04-13T10:00:05Z" },
+    { "id": 6,  "title": "Minor Surgery",        "category": "Surgical Services","icon": "bandage",     "price": "From Rs. 2,500", "description": "Wound repair, abscess drainage, biopsies and dental extractions under sedation or local anaesthesia. Same-day discharge for most procedures.", "image": null, "created_at": "2026-04-13T10:00:06Z" },
+    { "id": 7,  "title": "Diagnostic Imaging",   "category": "Diagnostics",      "icon": "scan",        "price": "From Rs. 1,500", "description": "Digital X-ray and ultrasound on-site for rapid, accurate diagnosis — from foreign body ingestion to cardiac assessment.", "image": null, "created_at": "2026-04-13T10:00:07Z" },
+    { "id": 8,  "title": "In-House Laboratory",  "category": "Diagnostics",      "icon": "flask",       "price": "From Rs. 1,000", "description": "Complete blood counts, biochemistry, urinalysis and screening tests run on the premises. Most results back in under an hour.", "image": null, "created_at": "2026-04-13T10:00:08Z" },
+    { "id": 9,  "title": "Dermatology",          "category": "Medical",          "icon": "leaf",        "price": "From Rs. 800",   "description": "Diagnosis and management of skin disease — allergies, mange, fungal and bacterial infections. We treat the cause, not just the itch.", "image": null, "created_at": "2026-04-13T10:00:09Z" },
+    { "id": 10, "title": "Nutrition & Weight",   "category": "Medical",          "icon": "bowl",        "price": "From Rs. 500",   "description": "Evidence-based diet planning for healthy adults, growing puppies and kittens, seniors, and pets with chronic conditions.", "image": null, "created_at": "2026-04-13T10:00:10Z" },
+    { "id": 11, "title": "Grooming",             "category": "Wellness",         "icon": "scissors",    "price": "From Rs. 1,200", "description": "Bathing, coat care, nail trims, ear cleaning and gland expression in a low-stress environment by trained handlers.", "image": null, "created_at": "2026-04-13T10:00:11Z" },
+    { "id": 12, "title": "24/7 Emergency",       "category": "Urgent Care",      "icon": "emergency",   "price": "Assessed on arrival", "description": "On-call veterinarians for after-hours emergencies. Trauma, poisoning, dystocia, acute illness — call before you drive.", "image": null, "created_at": "2026-04-13T10:00:12Z" }
+  ],
+  "pharmacy": [
+    { "id": 1,  "name": "Rabies Vaccine (Nobivac)",        "category": "Vaccines",   "price": "Rs. 1,200", "stock": "In stock",     "description": "Inactivated rabies vaccine for dogs and cats. Single annual booster after primary series.", "image": null, "created_at": "2026-04-13T10:00:01Z" },
+    { "id": 2,  "name": "DHPP Multivalent Vaccine",        "category": "Vaccines",   "price": "Rs. 1,800", "stock": "In stock",     "description": "Combination vaccine protecting dogs against Distemper, Hepatitis, Parvovirus and Parainfluenza.", "image": null, "created_at": "2026-04-13T10:00:02Z" },
+    { "id": 3,  "name": "Bravecto Chewable (Dogs)",         "category": "Parasiticides","price": "Rs. 2,400","stock": "In stock",     "description": "12-week flea and tick protection in a palatable chew. Dosed by body weight.", "image": null, "created_at": "2026-04-13T10:00:03Z" },
+    { "id": 4,  "name": "Drontal Plus Dewormer",           "category": "Parasiticides","price": "Rs. 180", "stock": "In stock",     "description": "Broad-spectrum oral dewormer effective against roundworms, hookworms and tapeworms.", "image": null, "created_at": "2026-04-13T10:00:04Z" },
+    { "id": 5,  "name": "Amoxicillin–Clavulanate 250mg",    "category": "Antibiotics","price": "Rs. 45/tab","stock": "Prescription only","description": "First-line broad-spectrum antibiotic. Dispensed only with veterinary prescription.", "image": null, "created_at": "2026-04-13T10:00:05Z" },
+    { "id": 6,  "name": "Meloxicam Oral Suspension",       "category": "Pain Relief","price": "Rs. 850",  "stock": "Prescription only","description": "NSAID for post-surgical and chronic joint pain in dogs and cats. Veterinary supervision required.", "image": null, "created_at": "2026-04-13T10:00:06Z" },
+    { "id": 7,  "name": "Otic Cleaner & Drying Solution",  "category": "Ear & Skin", "price": "Rs. 480",  "stock": "In stock",     "description": "Gentle ear cleanser for routine maintenance and after swimming. Reduces yeast and bacterial buildup.", "image": null, "created_at": "2026-04-13T10:00:07Z" },
+    { "id": 8,  "name": "Chlorhexidine Medicated Shampoo", "category": "Ear & Skin", "price": "Rs. 720",  "stock": "In stock",     "description": "Antimicrobial shampoo for pyoderma, hot spots and superficial skin infections. Use as directed.", "image": null, "created_at": "2026-04-13T10:00:08Z" },
+    { "id": 9,  "name": "Joint Support Tablets (Glucosamine)","category": "Supplements","price": "Rs. 1,400","stock": "In stock",   "description": "Glucosamine and chondroitin supplement for senior dogs and breeds prone to joint disease.", "image": null, "created_at": "2026-04-13T10:00:09Z" },
+    { "id": 10, "name": "Probiotic Sachets (FortiFlora)", "category": "Supplements","price": "Rs. 220/sachet","stock": "In stock", "description": "Daily probiotic to support digestion during antibiotic courses or dietary transitions.", "image": null, "created_at": "2026-04-13T10:00:10Z" }
+  ],
+  "petshop": [
+    { "id": 1,  "name": "Royal Canin Adult Dog 4kg",      "category": "Dog Food",      "price": "Rs. 2,800", "stock": "In stock", "description": "Complete nutrition for adult dogs of medium breeds. High digestibility and palatability.", "image": null, "created_at": "2026-04-13T10:00:01Z" },
+    { "id": 2,  "name": "Royal Canin Kitten 2kg",         "category": "Cat Food",      "price": "Rs. 2,200", "stock": "In stock", "description": "Tailored nutrition for kittens up to 12 months. Supports growth, immunity and digestive health.", "image": null, "created_at": "2026-04-13T10:00:02Z" },
+    { "id": 3,  "name": "Pedigree Puppy Chicken & Milk",  "category": "Dog Food",      "price": "Rs. 980",  "stock": "In stock", "description": "Affordable everyday puppy food with added DHA, calcium and antioxidants.", "image": null, "created_at": "2026-04-13T10:00:03Z" },
+    { "id": 4,  "name": "Whiskas Tuna Pouches (Pack)",    "category": "Cat Food",      "price": "Rs. 540",  "stock": "In stock", "description": "Wet food pouches for adult cats. Six 85g pouches per pack.", "image": null, "created_at": "2026-04-13T10:00:04Z" },
+    { "id": 5,  "name": "Nylon Leash & Collar Set",       "category": "Accessories",   "price": "Rs. 850",  "stock": "In stock", "description": "Adjustable padded collar with matching 1.5m leash. Three colour options, two sizes.", "image": null, "created_at": "2026-04-13T10:00:05Z" },
+    { "id": 6,  "name": "Cat Scratching Post 60cm",       "category": "Accessories",   "price": "Rs. 1,650","stock": "In stock", "description": "Sisal-wrapped post on a stable base with hanging toy. Saves your sofa from your cat.", "image": null, "created_at": "2026-04-13T10:00:06Z" },
+    { "id": 7,  "name": "Stainless Steel Bowl (Pair)",    "category": "Feeding",       "price": "Rs. 480",  "stock": "In stock", "description": "Anti-skid base, dishwasher safe. Two 350ml bowls — one for food, one for water.", "image": null, "created_at": "2026-04-13T10:00:07Z" },
+    { "id": 8,  "name": "Interactive Treat Puzzle",       "category": "Toys",          "price": "Rs. 950",  "stock": "In stock", "description": "Sliding puzzle that hides treats in compartments. Great for mental stimulation and slow feeding.", "image": null, "created_at": "2026-04-13T10:00:08Z" },
+    { "id": 9,  "name": "Soft Travel Carrier (Medium)",   "category": "Travel",        "price": "Rs. 2,200","stock": "In stock", "description": "Airline-friendly carrier for cats and small dogs. Mesh ventilation, padded interior.", "image": null, "created_at": "2026-04-13T10:00:09Z" },
+    { "id": 10, "name": "Clumping Cat Litter 10L",        "category": "Litter",        "price": "Rs. 780",  "stock": "In stock", "description": "Low-dust bentonite litter with odour control. Forms tight clumps for easy scooping.", "image": null, "created_at": "2026-04-13T10:00:10Z" }
+  ],
+  "blogs": [
+    {
+      "id": 1,
+      "title": "A Practical Guide to Vaccinating Your Dog or Cat",
+      "excerpt": "Which vaccines actually matter, when to give them, and why your vet may recommend a different schedule than the internet does.",
+      "content": "Vaccination is one of the most studied interventions in veterinary medicine, and one of the most misunderstood by owners. Core vaccines protect against diseases that are either fatal, untreatable, or transmissible to humans — rabies being the obvious example. Non-core vaccines are recommended based on lifestyle: a dog that boards or visits parks needs different protection than one that lives indoors.\n\nThe right schedule depends on your pet's age, prior vaccination history, and local disease prevalence. Over-vaccination is a real concern; under-vaccination is a more dangerous one. The honest answer is that a short conversation with your vet is worth more than any blog post — including this one.",
+      "author": "Dr. Bikash",
+      "image": null,
+      "created_at": "2026-04-10T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Microchipping, Explained Without the Sales Pitch",
+      "excerpt": "A microchip is the difference between a lost pet found and a lost pet gone. Here is what the procedure actually involves.",
+      "content": "A microchip is a passive RFID transponder roughly the size of a grain of rice, implanted under the skin between the shoulder blades. The procedure takes about ten seconds and is comparable in sensation to a vaccine injection. There is no battery, no GPS, and no maintenance.\n\nWhen a lost pet is brought to any clinic or shelter, a handheld scanner reads a unique 15-digit ID. That ID maps to a contact record in a national registry. The system only works if you keep your details current — we will walk you through registration after the implant.",
+      "author": "Dr. Bikash",
+      "image": null,
+      "created_at": "2026-04-08T10:00:00Z"
+    },
+    {
+      "id": 3,
+      "title": "When to Worry: Five Symptoms That Warrant a Same-Day Visit",
+      "excerpt": "Pets are remarkable at hiding illness. These five signs are not ones to wait on.",
+      "content": "Sudden lethargy combined with reduced appetite is the most under-reported emergency we see. Repeated vomiting, particularly with blood or in a young puppy, can dehydrate an animal within hours. Difficulty urinating in a male cat is a true emergency — a blocked bladder is fatal in 24 to 48 hours.\n\nLabored breathing, pale or blue gums, and any sudden collapse should be treated as emergencies regardless of the hour. When in doubt, call. We would rather reassure you on the phone than receive your pet too late.",
+      "author": "Dr. Bikash",
+      "image": null,
+      "created_at": "2026-04-05T10:00:00Z"
+    },
+    {
+      "id": 4,
+      "title": "Choosing the Right Food: Beyond the Marketing",
+      "excerpt": "Pet food labels are designed to sell, not to inform. A short guide to reading past the front of the bag.",
+      "content": "The most useful information on a pet food bag is on the back. Look for the AAFCO statement: it tells you whether the food is complete and balanced, and for which life stage. The ingredient list is ordered by weight before cooking, which means a 'chicken first' food may have less chicken than it appears once moisture is removed.\n\nPrice is a rough but imperfect proxy for quality. The best food is the one your pet does well on — stable weight, good coat, firm stools, normal energy. If those are present, brand wars are mostly noise.",
+      "author": "Dr. Bikash",
+      "image": null,
+      "created_at": "2026-04-01T10:00:00Z"
+    }
+  ]
+}

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>Dashboard · Bikalpa Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="/logo.jpg" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #fbfaf6; --bg-warm: #f4f1e9; --surface: #fff;
+    --ink: #0a1f2c; --soft: #4a5b66; --mute: #8a9aa2;
+    --line: #e6e1d4; --line-strong: #cdc6b4;
+    --navy: #1a3a5c; --navy-deep: #0e2238;
+    --emerald: #2fa771; --emerald-deep: #1f7d54;
+    --rose: #c44545; --accent: #c89c5a;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg); color: var(--ink);
+    min-height: 100vh; display: flex;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+
+  /* SIDEBAR */
+  aside {
+    width: 260px; flex-shrink: 0;
+    background: var(--navy-deep); color: rgba(255,255,255,0.78);
+    padding: 28px 20px; min-height: 100vh;
+    display: flex; flex-direction: column;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 36px; padding: 0 6px; }
+  .brand img { width: 40px; height: 40px; border-radius: 10px; object-fit: contain; background: var(--bg); padding: 2px; }
+  .brand strong { display: block; font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.05rem; color: #fff; }
+  .brand small { font-size: 0.66rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+
+  .nav-section { font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.4); padding: 8px 14px; margin-top: 18px; }
+  .nav-item {
+    width: 100%; padding: 11px 14px; border-radius: 10px;
+    background: none; border: none; color: rgba(255,255,255,0.78); text-align: left;
+    font-size: 0.92rem;
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 4px; transition: all .15s;
+  }
+  .nav-item svg { width: 18px; height: 18px; flex-shrink: 0; }
+  .nav-item:hover { background: rgba(255,255,255,0.06); color: #fff; }
+  .nav-item.active { background: linear-gradient(135deg, var(--navy), var(--emerald-deep)); color: #fff; }
+  .logout {
+    margin-top: auto; padding: 11px 14px; border-radius: 10px;
+    background: rgba(196,69,69,0.10); border: 1px solid rgba(196,69,69,0.20);
+    color: #ffb4b4; font-size: 0.88rem;
+    width: 100%; text-align: center;
+  }
+  .logout:hover { background: rgba(196,69,69,0.20); }
+
+  .view-site {
+    margin-top: 16px; padding: 11px 14px; border-radius: 10px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.10);
+    color: rgba(255,255,255,0.85); font-size: 0.86rem;
+    text-align: center; display: block;
+  }
+  .view-site:hover { background: rgba(255,255,255,0.10); color: #fff; }
+
+  /* MAIN */
+  main { flex: 1; padding: 36px 44px; overflow: auto; min-width: 0; }
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 32px;
+  }
+  .topbar h1 { font-family: 'Fraunces', serif; font-weight: 400; font-size: 1.8rem; letter-spacing: -0.02em; }
+  .topbar .sub { color: var(--mute); font-size: 0.92rem; margin-top: 4px; }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; border-radius: 999px;
+    background: var(--ink); color: var(--bg);
+    border: 1px solid var(--ink);
+    font-weight: 500; font-size: 0.88rem;
+    transition: all .15s;
+  }
+  .btn:hover { background: var(--navy-deep); transform: translateY(-1px); }
+  .btn-emerald { background: var(--emerald-deep); border-color: var(--emerald-deep); color: #fff; }
+  .btn-emerald:hover { background: var(--emerald); border-color: var(--emerald); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+  .btn-ghost:hover { background: rgba(0,0,0,0.03); border-color: var(--ink); }
+  .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
+  .btn-danger { background: var(--rose); border-color: var(--rose); color: #fff; }
+  .btn-danger:hover { background: #a73838; border-color: #a73838; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .stat {
+    background: var(--surface); padding: 24px;
+    border-radius: 14px; border: 1px solid var(--line);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .stat-icon {
+    width: 48px; height: 48px; border-radius: 12px; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(26,58,92,0.10), rgba(47,167,113,0.12));
+    color: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .stat-icon svg { width: 22px; height: 22px; }
+  .stat-num { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.7rem; line-height: 1; }
+  .stat-lbl { font-size: 0.78rem; color: var(--mute); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+  /* PANEL */
+  .panel { background: var(--surface); border-radius: 14px; border: 1px solid var(--line); overflow: hidden; }
+  .panel-head { padding: 20px 24px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+  .panel-head h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.2rem; }
+  .panel-head .count { color: var(--mute); font-size: 0.82rem; margin-left: 8px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 14px 24px; text-align: left; font-size: 0.92rem; vertical-align: middle; }
+  th { background: var(--bg-warm); color: var(--soft); font-weight: 500; font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  tbody tr { border-top: 1px solid var(--line); transition: background .15s; }
+  tbody tr:hover { background: rgba(0,0,0,0.015); }
+  td .thumb {
+    width: 48px; height: 48px; border-radius: 10px;
+    background: var(--bg-warm); overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--navy);
+  }
+  td .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  td .thumb svg { width: 22px; height: 22px; opacity: 0.4; }
+  td .row-title { display: block; font-weight: 500; font-size: 0.96rem; }
+  td .row-sub { display: block; font-size: 0.8rem; color: var(--mute); margin-top: 2px; }
+  .row-actions { display: flex; gap: 6px; justify-content: flex-end; }
+
+  .stock-pill {
+    display: inline-block; padding: 3px 10px; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.04em;
+    background: rgba(47,167,113,0.12); color: var(--emerald-deep);
+  }
+  .stock-pill.rx { background: rgba(200,156,90,0.15); color: var(--accent); }
+
+  /* MODAL */
+  .modal {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(10,31,44,0.55); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    animation: fade .2s ease;
+  }
+  .modal-inner {
+    background: var(--surface); border-radius: 16px;
+    width: 100%; max-width: 580px;
+    max-height: 92vh; overflow-y: auto;
+    padding: 36px;
+    animation: pop .3s cubic-bezier(0.22,1,0.36,1);
+  }
+  .modal-inner h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .modal-inner .mh-sub { color: var(--mute); font-size: 0.92rem; margin-bottom: 28px; }
+
+  .field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 18px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .field label { font-size: 0.75rem; font-weight: 500; color: var(--soft); letter-spacing: 0.08em; text-transform: uppercase; }
+  .field input, .field textarea, .field select {
+    padding: 12px 14px; border-radius: 10px;
+    border: 1px solid var(--line);
+    font-family: inherit; font-size: 0.94rem; background: var(--bg);
+    color: var(--ink);
+  }
+  .field input:focus, .field textarea:focus, .field select:focus {
+    outline: none; border-color: var(--emerald-deep); background: #fff;
+    box-shadow: 0 0 0 3px rgba(47,167,113,0.10);
+  }
+  .field textarea { resize: vertical; min-height: 90px; }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+  .file-drop {
+    padding: 18px; border: 1.5px dashed var(--line-strong); border-radius: 10px;
+    text-align: center; color: var(--mute); font-size: 0.85rem;
+    transition: all .15s;
+  }
+  .file-drop:hover { border-color: var(--emerald-deep); color: var(--ink); }
+  .file-preview { margin-top: 10px; max-width: 220px; max-height: 140px; border-radius: 10px; }
+
+  .empty { padding: 80px 20px; text-align: center; color: var(--mute); font-size: 0.94rem; }
+  .empty p { margin-top: 8px; }
+
+  @keyframes fade { from{opacity:0} to{opacity:1} }
+  @keyframes pop { from{transform:scale(.96);opacity:0} to{transform:scale(1);opacity:1} }
+
+  @media (max-width: 900px) {
+    body { flex-direction: column; }
+    aside { width: 100%; min-height: auto; }
+    main { padding: 24px; }
+    th, td { padding: 12px 14px; }
+  }
+</style>
+</head>
+<body>
+<aside>
+  <div class="brand">
+    <img src="/logo.jpg" alt=""/>
+    <div>
+      <strong>Bikalpa Admin</strong>
+      <small>Vet · Pharmacy · Shop</small>
+    </div>
+  </div>
+
+  <div class="nav-section">Overview</div>
+  <button class="nav-item active" data-tab="overview">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    Dashboard
+  </button>
+
+  <div class="nav-section">Manage</div>
+  <button class="nav-item" data-tab="services">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v6a4 4 0 0 0 8 0V3"/><circle cx="18" cy="14" r="2.5"/><path d="M10 13v3a5 5 0 0 0 10 0v-2.5"/></svg>
+    Services
+  </button>
+  <button class="nav-item" data-tab="pharmacy">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="8" rx="4" transform="rotate(-30 12 12)"/><path d="m9.5 5.5 9 9"/></svg>
+    Pharmacy
+  </button>
+  <button class="nav-item" data-tab="petshop">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+    Pet shop
+  </button>
+  <button class="nav-item" data-tab="blogs">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M16 4v4h4M8 13h8M8 17h5"/></svg>
+    Journal
+  </button>
+
+  <a href="/" target="_blank" class="view-site">View site ↗</a>
+  <button class="logout" onclick="logout()">Sign out</button>
+</aside>
+
+<main>
+  <div class="topbar">
+    <div>
+      <h1 id="page-title">Dashboard</h1>
+      <div class="sub" id="page-sub">Overview of your clinic</div>
+    </div>
+    <button class="btn btn-emerald" id="add-btn" style="display:none">+ New entry</button>
+  </div>
+
+  <section id="tab-overview">
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6 3v6a4 4 0 0 0 8 0V3"/><circle cx="18" cy="14" r="2.5"/><path d="M10 13v3a5 5 0 0 0 10 0v-2.5"/></svg></div>
+        <div><div class="stat-num" id="cnt-services">–</div><div class="stat-lbl">Services</div></div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="8" width="20" height="8" rx="4" transform="rotate(-30 12 12)"/><path d="m9.5 5.5 9 9"/></svg></div>
+        <div><div class="stat-num" id="cnt-pharmacy">–</div><div class="stat-lbl">Pharmacy items</div></div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg></div>
+        <div><div class="stat-num" id="cnt-petshop">–</div><div class="stat-lbl">Pet shop items</div></div>
+      </div>
+      <div class="stat">
+        <div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h12l4 4v12H4z"/><path d="M16 4v4h4M8 13h8M8 17h5"/></svg></div>
+        <div><div class="stat-num" id="cnt-blogs">–</div><div class="stat-lbl">Journal entries</div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>Quick actions</h2></div>
+      <div style="padding:24px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn btn-emerald" onclick="goTo('services'); openServiceModal();">+ New service</button>
+        <button class="btn btn-ghost" onclick="goTo('pharmacy'); openPharmacyModal();">+ Pharmacy item</button>
+        <button class="btn btn-ghost" onclick="goTo('petshop'); openPetshopModal();">+ Pet shop item</button>
+        <button class="btn btn-ghost" onclick="goTo('blogs'); openBlogModal();">+ Blog post</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="tab-services" style="display:none">
+    <div class="panel">
+      <div class="panel-head"><h2>Services <span class="count" id="svc-count"></span></h2></div>
+      <table>
+        <thead><tr><th></th><th>Title</th><th>Category</th><th>Price</th><th></th></tr></thead>
+        <tbody id="svc-tbody"></tbody>
+      </table>
+      <div id="svc-empty" class="empty" style="display:none">No services yet. Click "+ New entry" to add one.</div>
+    </div>
+  </section>
+
+  <section id="tab-pharmacy" style="display:none">
+    <div class="panel">
+      <div class="panel-head"><h2>Pharmacy <span class="count" id="pha-count"></span></h2></div>
+      <table>
+        <thead><tr><th></th><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr></thead>
+        <tbody id="pha-tbody"></tbody>
+      </table>
+      <div id="pha-empty" class="empty" style="display:none">No pharmacy items yet.</div>
+    </div>
+  </section>
+
+  <section id="tab-petshop" style="display:none">
+    <div class="panel">
+      <div class="panel-head"><h2>Pet shop <span class="count" id="pet-count"></span></h2></div>
+      <table>
+        <thead><tr><th></th><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th></th></tr></thead>
+        <tbody id="pet-tbody"></tbody>
+      </table>
+      <div id="pet-empty" class="empty" style="display:none">No pet shop items yet.</div>
+    </div>
+  </section>
+
+  <section id="tab-blogs" style="display:none">
+    <div class="panel">
+      <div class="panel-head"><h2>Journal <span class="count" id="blog-count"></span></h2></div>
+      <table>
+        <thead><tr><th></th><th>Title</th><th>Author</th><th>Date</th><th></th></tr></thead>
+        <tbody id="blog-tbody"></tbody>
+      </table>
+      <div id="blog-empty" class="empty" style="display:none">No journal entries yet.</div>
+    </div>
+  </section>
+</main>
+
+<script>
+let data = { services: [], pharmacy: [], petshop: [], blogs: [] };
+
+const titles = {
+  overview: ['Dashboard', 'Overview of your clinic'],
+  services: ['Services', 'Vet services shown on the homepage'],
+  pharmacy: ['Pharmacy', 'Medicines, vaccines and supplements'],
+  petshop:  ['Pet shop', 'Food, accessories and supplies'],
+  blogs:    ['Journal', 'Articles published on the website']
+};
+
+function esc(str) {
+  if (str == null) return '';
+  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+async function checkAuth() {
+  const res = await fetch('/api/admin/me');
+  if (!res.ok) location.href = '/portal-9k2x';
+}
+
+function showTab(tab) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.tab === tab));
+  ['overview','services','pharmacy','petshop','blogs'].forEach(t => {
+    document.getElementById('tab-' + t).style.display = (t === tab) ? '' : 'none';
+  });
+  const [title, sub] = titles[tab];
+  document.getElementById('page-title').textContent = title;
+  document.getElementById('page-sub').textContent = sub;
+  const addBtn = document.getElementById('add-btn');
+  if (tab === 'overview') { addBtn.style.display = 'none'; }
+  else {
+    addBtn.style.display = '';
+    addBtn.textContent = '+ New ' + (tab === 'blogs' ? 'post' : tab.replace(/s$/, ''));
+    addBtn.onclick = () => ({
+      services: openServiceModal,
+      pharmacy: openPharmacyModal,
+      petshop:  openPetshopModal,
+      blogs:    openBlogModal
+    }[tab])();
+  }
+}
+function goTo(tab) { showTab(tab); }
+document.querySelectorAll('.nav-item').forEach(b => b.onclick = () => showTab(b.dataset.tab));
+
+async function loadAll() {
+  const [s, ph, pe, b] = await Promise.all([
+    fetch('/api/services').then(r => r.json()),
+    fetch('/api/pharmacy').then(r => r.json()),
+    fetch('/api/petshop').then(r => r.json()),
+    fetch('/api/blogs').then(r => r.json())
+  ]);
+  data = { services: s, pharmacy: ph, petshop: pe, blogs: b };
+  document.getElementById('cnt-services').textContent = s.length;
+  document.getElementById('cnt-pharmacy').textContent = ph.length;
+  document.getElementById('cnt-petshop').textContent = pe.length;
+  document.getElementById('cnt-blogs').textContent = b.length;
+  renderServices(); renderPharmacy(); renderPetshop(); renderBlogs();
+}
+
+function editItem(collection, id) {
+  const item = data[collection].find(i => i.id === id);
+  if (!item) return;
+  if (collection === 'services') openServiceModal(item);
+  else if (collection === 'blogs') openBlogModal(item);
+  else openProductModal(collection, item);
+}
+
+function renderServices() {
+  const tbody = document.getElementById('svc-tbody');
+  document.getElementById('svc-count').textContent = `(${data.services.length})`;
+  document.getElementById('svc-empty').style.display = data.services.length ? 'none' : '';
+  tbody.innerHTML = data.services.map(s => `
+    <tr>
+      <td><div class="thumb">${s.image ? `<img src="${s.image}"/>` : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="10" r="2"/><circle cx="10" cy="5" r="2"/><circle cx="14" cy="5" r="2"/><circle cx="18" cy="10" r="2"/><path d="M8 16c0-3 2-5 4-5s4 2 4 5c0 2-2 3-4 3s-4-1-4-3z"/></svg>'}</div></td>
+      <td><span class="row-title">${esc(s.title)}</span><span class="row-sub">${esc((s.description || '').slice(0, 60))}</span></td>
+      <td>${esc(s.category || '—')}</td>
+      <td>${esc(s.price || '—')}</td>
+      <td><div class="row-actions">
+        <button class="btn btn-sm btn-ghost" onclick="editItem('services', ${s.id})">Edit</button>
+        <button class="btn btn-sm btn-danger" onclick="del('services', ${s.id})">Delete</button>
+      </div></td>
+    </tr>
+  `).join('');
+}
+
+function renderProductTable(collection, tbodyId, countId, emptyId) {
+  const items = data[collection];
+  const tbody = document.getElementById(tbodyId);
+  document.getElementById(countId).textContent = `(${items.length})`;
+  document.getElementById(emptyId).style.display = items.length ? 'none' : '';
+  tbody.innerHTML = items.map(p => {
+    const isRx = (p.stock || '').toLowerCase().includes('prescription');
+    return `
+    <tr>
+      <td><div class="thumb">${p.image ? `<img src="${p.image}"/>` : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="6" width="16" height="14" rx="2"/></svg>'}</div></td>
+      <td><span class="row-title">${esc(p.name)}</span><span class="row-sub">${esc((p.description || '').slice(0, 60))}</span></td>
+      <td>${esc(p.category || '—')}</td>
+      <td>${esc(p.price || '—')}</td>
+      <td>${p.stock ? `<span class="stock-pill ${isRx ? 'rx' : ''}">${esc(p.stock)}</span>` : '—'}</td>
+      <td><div class="row-actions">
+        <button class="btn btn-sm btn-ghost" onclick="editItem('${collection}', ${p.id})">Edit</button>
+        <button class="btn btn-sm btn-danger" onclick="del('${collection}', ${p.id})">Delete</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+function renderPharmacy() { renderProductTable('pharmacy', 'pha-tbody', 'pha-count', 'pha-empty'); }
+function renderPetshop()  { renderProductTable('petshop',  'pet-tbody', 'pet-count', 'pet-empty'); }
+
+function renderBlogs() {
+  const tbody = document.getElementById('blog-tbody');
+  document.getElementById('blog-count').textContent = `(${data.blogs.length})`;
+  document.getElementById('blog-empty').style.display = data.blogs.length ? 'none' : '';
+  tbody.innerHTML = data.blogs.map(b => `
+    <tr>
+      <td><div class="thumb">${b.image ? `<img src="${b.image}"/>` : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h12l4 4v12H4z"/></svg>'}</div></td>
+      <td><span class="row-title">${esc(b.title)}</span><span class="row-sub">${esc((b.excerpt || '').slice(0, 60))}</span></td>
+      <td>${esc(b.author || '—')}</td>
+      <td>${new Date(b.created_at).toLocaleDateString('en-GB')}</td>
+      <td><div class="row-actions">
+        <button class="btn btn-sm btn-ghost" onclick="editItem('blogs', ${b.id})">Edit</button>
+        <button class="btn btn-sm btn-danger" onclick="del('blogs', ${b.id})">Delete</button>
+      </div></td>
+    </tr>
+  `).join('');
+}
+
+function openModal(html) {
+  const m = document.createElement('div');
+  m.className = 'modal';
+  m.innerHTML = `<div class="modal-inner">${html}</div>`;
+  m.onclick = e => { if (e.target === m) m.remove(); };
+  document.body.appendChild(m);
+  return m;
+}
+
+function openServiceModal(s = null) {
+  const iconOptions = ['paw','microchip','stethoscope','syringe','shield','scalpel','bandage','scan','flask','leaf','bowl','scissors','emergency','heart'];
+  const m = openModal(`
+    <h2>${s ? 'Edit' : 'Add'} service</h2>
+    <div class="mh-sub">${s ? 'Update an existing service' : 'New entry shown on the homepage'}</div>
+    <form id="frm">
+      <div class="field"><label>Title *</label><input name="title" required value="${esc(s?.title || '')}"/></div>
+      <div class="field-row">
+        <div class="field"><label>Category</label><input name="category" value="${esc(s?.category || 'Preventive Care')}" placeholder="Preventive Care, Surgical Services…"/></div>
+        <div class="field"><label>Price</label><input name="price" value="${esc(s?.price || '')}" placeholder="From Rs. 1,000"/></div>
+      </div>
+      <div class="field"><label>Icon (used when no image)</label>
+        <select name="icon">${iconOptions.map(i => `<option ${s?.icon === i ? 'selected' : ''}>${i}</option>`).join('')}</select>
+      </div>
+      <div class="field"><label>Description</label><textarea name="description">${esc(s?.description || '')}</textarea></div>
+      <div class="field"><label>Image (optional, replaces icon)</label>
+        <label class="file-drop" for="f-img">Click to upload an image</label>
+        <input type="file" id="f-img" name="image" accept="image/*" style="display:none"/>
+        ${s?.image ? `<img src="${s.image}" class="file-preview" id="prev"/>` : '<img class="file-preview" id="prev" style="display:none"/>'}
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="this.closest('.modal').remove()">Cancel</button>
+        <button type="submit" class="btn btn-emerald">${s ? 'Save changes' : 'Create'}</button>
+      </div>
+    </form>
+  `);
+  bindFile(m);
+  m.querySelector('#frm').onsubmit = save(m, 'services', s?.id);
+}
+
+function openProductModal(collection, p = null) {
+  const m = openModal(`
+    <h2>${p ? 'Edit' : 'Add'} ${collection === 'pharmacy' ? 'pharmacy item' : 'pet shop item'}</h2>
+    <div class="mh-sub">${p ? 'Update product details' : 'New product shown in the shop section'}</div>
+    <form id="frm">
+      <div class="field"><label>Name *</label><input name="name" required value="${esc(p?.name || '')}"/></div>
+      <div class="field-row">
+        <div class="field"><label>Category</label><input name="category" value="${esc(p?.category || '')}" placeholder="${collection === 'pharmacy' ? 'Vaccines, Antibiotics…' : 'Dog Food, Toys…'}"/></div>
+        <div class="field"><label>Price</label><input name="price" value="${esc(p?.price || '')}" placeholder="Rs. 0"/></div>
+      </div>
+      <div class="field"><label>Stock label</label><input name="stock" value="${esc(p?.stock || 'In stock')}" placeholder="In stock / Prescription only / Out of stock"/></div>
+      <div class="field"><label>Description</label><textarea name="description">${esc(p?.description || '')}</textarea></div>
+      <div class="field"><label>Product image (optional)</label>
+        <label class="file-drop" for="f-img">Click to upload an image</label>
+        <input type="file" id="f-img" name="image" accept="image/*" style="display:none"/>
+        ${p?.image ? `<img src="${p.image}" class="file-preview" id="prev"/>` : '<img class="file-preview" id="prev" style="display:none"/>'}
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="this.closest('.modal').remove()">Cancel</button>
+        <button type="submit" class="btn btn-emerald">${p ? 'Save changes' : 'Create'}</button>
+      </div>
+    </form>
+  `);
+  bindFile(m);
+  m.querySelector('#frm').onsubmit = save(m, collection, p?.id);
+}
+
+function openBlogModal(b = null) {
+  const m = openModal(`
+    <h2>${b ? 'Edit' : 'New'} journal post</h2>
+    <div class="mh-sub">${b ? 'Update post content' : 'Publish a new article to the website'}</div>
+    <form id="frm">
+      <div class="field"><label>Title *</label><input name="title" required value="${esc(b?.title || '')}"/></div>
+      <div class="field"><label>Author</label><input name="author" value="${esc(b?.author || 'Dr. Bikash')}"/></div>
+      <div class="field"><label>Excerpt (short summary)</label><textarea name="excerpt" rows="2">${esc(b?.excerpt || '')}</textarea></div>
+      <div class="field"><label>Full content</label><textarea name="content" rows="7">${esc(b?.content || '')}</textarea></div>
+      <div class="field"><label>Cover image (optional)</label>
+        <label class="file-drop" for="f-img">Click to upload</label>
+        <input type="file" id="f-img" name="image" accept="image/*" style="display:none"/>
+        ${b?.image ? `<img src="${b.image}" class="file-preview" id="prev"/>` : '<img class="file-preview" id="prev" style="display:none"/>'}
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" onclick="this.closest('.modal').remove()">Cancel</button>
+        <button type="submit" class="btn btn-emerald">${b ? 'Save changes' : 'Publish'}</button>
+      </div>
+    </form>
+  `);
+  bindFile(m);
+  m.querySelector('#frm').onsubmit = save(m, 'blogs', b?.id);
+}
+function openPharmacyModal(p) { openProductModal('pharmacy', p); }
+function openPetshopModal(p)  { openProductModal('petshop',  p); }
+
+function bindFile(m) {
+  const fi = m.querySelector('#f-img');
+  if (!fi) return;
+  fi.onchange = e => {
+    const p = m.querySelector('#prev');
+    if (e.target.files[0]) {
+      p.src = URL.createObjectURL(e.target.files[0]);
+      p.style.display = '';
+    }
+  };
+}
+
+function save(m, collection, id) {
+  return async (e) => {
+    e.preventDefault();
+    const fd = new FormData(e.target);
+    const url = id ? `/api/admin/${collection}/${id}` : `/api/admin/${collection}`;
+    const method = id ? 'PUT' : 'POST';
+    const btn = e.target.querySelector('button[type=submit]');
+    btn.disabled = true; btn.textContent = 'Saving…';
+    const res = await fetch(url, { method, body: fd });
+    if (res.ok) { m.remove(); loadAll(); }
+    else { btn.disabled = false; btn.textContent = 'Try again'; alert('Save failed'); }
+  };
+}
+
+async function del(collection, id) {
+  if (!confirm('Delete this entry? This cannot be undone.')) return;
+  await fetch(`/api/admin/${collection}/${id}`, { method: 'DELETE' });
+  loadAll();
+}
+
+async function logout() {
+  await fetch('/api/admin/logout', { method: 'POST' });
+  location.href = '/portal-9k2x';
+}
+
+checkAuth().then(loadAll);
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+node_modules/
+data/db.json
+data/*.db
+data/*.db-shm
+data/*.db-wal
+public/uploads/*
+!public/uploads/.gitkeep
+.env
+.vercel
+.DS_Store

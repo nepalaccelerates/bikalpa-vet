@@ -199,8 +199,7 @@
     padding: 36px;
     animation: pop .3s cubic-bezier(0.22,1,0.36,1);
   }
-  .modal-inner h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px; }
-  .modal-inner .mh-sub { color: var(--mute); font-size: 0.92rem; margin-bottom: 28px; }
+  .modal-inner h2 { font-family: 'Fraunces', serif; font-weight: 500; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 24px; }
   .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
 
   .empty { padding: 80px 20px; text-align: center; color: var(--mute); font-size: 0.94rem; }
@@ -309,7 +308,7 @@
         <button class="btn btn-ghost" onclick="showTab('pharmacy'); openProductModal('pharmacy');">+ Pharmacy item</button>
         <button class="btn btn-ghost" onclick="showTab('petshop'); openProductModal('petshop');">+ Pet shop item</button>
         <button class="btn btn-ghost" onclick="showTab('blogs'); openBlogModal();">+ Blog post</button>
-        <button class="btn btn-ghost" onclick="showTab('settings')">Edit site settings</button>
+        <button class="btn btn-ghost" onclick="showTab('settings')">Site settings</button>
       </div>
     </div>
   </section>
@@ -321,7 +320,7 @@
         <thead><tr><th></th><th>Title</th><th>Category</th><th>Price</th><th></th></tr></thead>
         <tbody id="svc-tbody"></tbody>
       </table>
-      <div id="svc-empty" class="empty" style="display:none">No services yet. Click "+ New service" to add one.</div>
+      <div id="svc-empty" class="empty" style="display:none">No services yet.</div>
     </div>
   </section>
 
@@ -375,12 +374,11 @@
       </div>
     </div>
     <div class="panel">
-      <div class="panel-head"><h2>Backup</h2><span class="hint">Download all content and settings as JSON</span></div>
+      <div class="panel-head"><h2>Backup</h2></div>
       <div class="panel-body">
         <a class="btn btn-ghost" href="/api/admin/export" download>Download backup</a>
         <p style="margin-top:14px; font-size:0.85rem; color:var(--mute); max-width:560px; line-height:1.6">
-          Downloads every setting, service, product and article as a single JSON file.
-          Keep a copy somewhere safe from time to time.
+          All site content in one file. Keep a copy now and then.
         </p>
       </div>
     </div>
@@ -394,12 +392,12 @@ let settings = {};
 
 const TABS = {
   overview: ['Dashboard', 'Overview of your clinic'],
-  services: ['Services', 'Vet services shown on the homepage'],
-  pharmacy: ['Pharmacy', 'Medicines, vaccines and supplements'],
+  services: ['Services', 'Services shown on the homepage'],
+  pharmacy: ['Pharmacy', 'Medicines and supplements'],
   petshop:  ['Pet shop', 'Food, accessories and supplies'],
-  blogs:    ['Journal', 'Articles published on the website'],
-  settings: ['Site settings', 'Branding, homepage text and contact details'],
-  account:  ['Account', 'Password and data backup']
+  blogs:    ['Journal', 'Articles on the website'],
+  settings: ['Site settings', 'Text, images and contact info'],
+  account:  ['Account', 'Password and backup']
 };
 
 function esc(str) {
@@ -555,7 +553,6 @@ function openServiceModal(s = null) {
   const iconOptions = ['paw','microchip','stethoscope','syringe','shield','scalpel','bandage','scan','flask','leaf','bowl','scissors','emergency','heart'];
   const m = openModal(`
     <h2>${s ? 'Edit' : 'Add'} service</h2>
-    <div class="mh-sub">${s ? 'Update an existing service' : 'New entry shown on the homepage'}</div>
     <form id="frm">
       <div class="field"><label>Title *</label><input name="title" required value="${esc(s?.title || '')}"/></div>
       <div class="field-row">
@@ -580,7 +577,6 @@ function openServiceModal(s = null) {
 function openProductModal(collection, p = null) {
   const m = openModal(`
     <h2>${p ? 'Edit' : 'Add'} ${collection === 'pharmacy' ? 'pharmacy item' : 'pet shop item'}</h2>
-    <div class="mh-sub">${p ? 'Update product details' : 'New product shown in the shop section'}</div>
     <form id="frm">
       <div class="field"><label>Name *</label><input name="name" required value="${esc(p?.name || '')}"/></div>
       <div class="field-row">
@@ -602,8 +598,7 @@ function openProductModal(collection, p = null) {
 
 function openBlogModal(b = null) {
   const m = openModal(`
-    <h2>${b ? 'Edit' : 'New'} journal post</h2>
-    <div class="mh-sub">${b ? 'Update post content' : 'Publish a new article to the website'}</div>
+    <h2>${b ? 'Edit' : 'New'} post</h2>
     <form id="frm">
       <div class="field"><label>Title *</label><input name="title" required value="${esc(b?.title || '')}"/></div>
       <div class="field"><label>Author</label><input name="author" value="${esc(b?.author || settings.doctor_name || '')}"/></div>
@@ -646,79 +641,79 @@ function save(m, collection, id) {
 }
 
 async function del(collection, id) {
-  if (!confirm('Delete this entry? This cannot be undone.')) return;
+  if (!confirm('Delete this entry?')) return;
   await fetch(`/api/admin/${collection}/${id}`, { method: 'DELETE' });
   loadAll();
 }
 
 /* ---------- Site settings ---------- */
 const SETTINGS_SCHEMA = [
-  { title: 'Brand & identity', hint: 'Shown in the header, footer and browser tab', fields: [
+  { title: 'Brand', hint: 'Header, footer and browser tab', fields: [
     { k: 'logo', type: 'image', label: 'Logo' },
     { row: [
       { k: 'clinic_name', label: 'Clinic name' },
       { k: 'clinic_subtitle', label: 'Subtitle' }
     ]},
     { k: 'site_title', label: 'Browser tab title' },
-    { k: 'site_description', label: 'Search engine description', type: 'textarea', rows: 2 }
+    { k: 'site_description', label: 'Search description', type: 'textarea', rows: 2 }
   ]},
-  { title: 'Homepage hero', hint: 'The first screen visitors see', fields: [
+  { title: 'Homepage top', fields: [
     { row: [
       { k: 'hero_heading', label: 'Heading' },
-      { k: 'hero_accent', label: 'Heading accent (italic part)' }
+      { k: 'hero_accent', label: 'Heading italic part' }
     ]},
-    { k: 'hero_text', label: 'Intro paragraph', type: 'textarea', rows: 3 },
+    { k: 'hero_text', label: 'Intro text', type: 'textarea', rows: 3 },
     { row: [
-      { k: 'hero_badge', label: 'Floating badge' },
-      { k: 'hero_card_title', label: 'Floating card title' }
+      { k: 'hero_badge', label: 'Badge' },
+      { k: 'hero_card_title', label: 'Card title' }
     ]},
-    { k: 'hero_card_text', label: 'Floating card text' },
-    { k: 'hero_image', type: 'image', label: 'Hero photo', clearable: true, note: 'Optional — replaces the animated graphic' },
-    { row: [ { k: 'stat1_value', label: 'Stat 1 · value' }, { k: 'stat1_label', label: 'Stat 1 · label' } ]},
-    { row: [ { k: 'stat2_value', label: 'Stat 2 · value' }, { k: 'stat2_label', label: 'Stat 2 · label' } ]},
-    { row: [ { k: 'stat3_value', label: 'Stat 3 · value' }, { k: 'stat3_label', label: 'Stat 3 · label' } ]}
+    { k: 'hero_card_text', label: 'Card text' },
+    { k: 'hero_image', type: 'image', label: 'Photo', clearable: true, note: 'Optional, replaces the animation' },
+    { row: [ { k: 'stat1_value', label: 'Stat 1 value' }, { k: 'stat1_label', label: 'Stat 1 label' } ]},
+    { row: [ { k: 'stat2_value', label: 'Stat 2 value' }, { k: 'stat2_label', label: 'Stat 2 label' } ]},
+    { row: [ { k: 'stat3_value', label: 'Stat 3 value' }, { k: 'stat3_label', label: 'Stat 3 label' } ]}
   ]},
-  { title: 'Trust bar', hint: 'The strip of credentials under the hero', fields: [
-    { k: 'trust_items', label: 'Items', type: 'textarea', rows: 5, note: 'One item per line' }
+  { title: 'Highlights strip', fields: [
+    { k: 'trust_items', label: 'Items', type: 'textarea', rows: 5, note: 'One per line' }
   ]},
-  { title: 'Veterinarian', hint: 'The "Behind the practice" section', fields: [
+  { title: 'Veterinarian', fields: [
     { row: [
       { k: 'doctor_name', label: 'Name' },
       { k: 'doctor_title', label: 'Title' }
     ]},
     { k: 'doctor_heading', label: 'Section heading' },
-    { k: 'doctor_bio', label: 'Bio', type: 'textarea', rows: 4, note: 'A blank line starts a new paragraph' },
+    { k: 'doctor_bio', label: 'Bio', type: 'textarea', rows: 4, note: 'Blank line starts a new paragraph' },
     { k: 'doctor_image', type: 'image', label: 'Photo', clearable: true }
   ]},
-  { title: 'Contact & location', fields: [
+  { title: 'Contact', fields: [
     { row: [
-      { k: 'phone_primary', label: 'Primary phone' },
-      { k: 'phone_primary_name', label: 'Primary phone label' }
+      { k: 'phone_primary', label: 'Phone' },
+      { k: 'phone_primary_name', label: 'Phone label' }
     ]},
     { row: [
-      { k: 'phone_backup', label: 'Backup phone', note: 'Leave empty to hide' },
+      { k: 'phone_backup', label: 'Backup phone', note: 'Empty hides it' },
       { k: 'phone_backup_name', label: 'Backup phone label' }
     ]},
     { row: [
       { k: 'email', label: 'Email' },
-      { k: 'whatsapp_number', label: 'WhatsApp number', note: 'With country code · leave empty to hide the chat button' }
+      { k: 'whatsapp_number', label: 'WhatsApp number', note: 'With country code. Empty hides the chat button' }
     ]},
-    { k: 'whatsapp_greeting', label: 'WhatsApp popup greeting' },
-    { k: 'whatsapp_message', label: 'Pre-filled WhatsApp message' },
+    { k: 'whatsapp_greeting', label: 'Chat greeting' },
+    { k: 'whatsapp_message', label: 'Prefilled chat message' },
     { row: [
-      { k: 'address_line1', label: 'Address line 1' },
-      { k: 'address_line2', label: 'Address line 2' }
+      { k: 'address_line1', label: 'Address' },
+      { k: 'address_line2', label: 'City' }
     ]},
     { row: [
       { k: 'hours_main', label: 'Opening hours' },
       { k: 'hours_note', label: 'Hours note' }
     ]},
-    { k: 'maps_query', label: 'Google Maps search', note: 'The place name or address the embedded map should find' }
+    { k: 'maps_query', label: 'Map search', note: 'Place name or address for the map' }
   ]},
   { title: 'Footer', fields: [
     { k: 'footer_blurb', label: 'About text', type: 'textarea', rows: 2 },
     { row: [
-      { k: 'footer_credit_text', label: 'Credit line', note: 'Leave empty to hide' },
+      { k: 'footer_credit_text', label: 'Credit line', note: 'Empty hides it' },
       { k: 'footer_credit_url', label: 'Credit link' }
     ]}
   ]}
@@ -734,9 +729,9 @@ function settingsInput(f) {
         <div class="img-field">
           <img class="current ${settings[f.k] ? '' : 'empty'}" id="set-prev-${f.k}" src="${val}" alt=""/>
           <div class="controls">
-            <label class="file-drop" for="set-file-${f.k}">Upload new image</label>
+            <label class="file-drop" for="set-file-${f.k}">Upload image</label>
             <input type="file" id="set-file-${f.k}" data-img="${f.k}" accept="image/*" style="display:none"/>
-            ${f.clearable || f.k === 'logo' ? `<label class="clear-check"><input type="checkbox" id="set-clear-${f.k}"/> ${f.k === 'logo' ? 'Reset to default logo' : 'Remove image'}</label>` : ''}
+            ${f.clearable || f.k === 'logo' ? `<label class="clear-check"><input type="checkbox" id="set-clear-${f.k}"/> ${f.k === 'logo' ? 'Reset logo' : 'Remove image'}</label>` : ''}
           </div>
         </div>
       </div>`;
@@ -760,8 +755,8 @@ function renderSettingsForm() {
     </div>
   `).join('') + `
     <div class="save-bar">
-      <span class="msg" id="settings-msg">Changes go live as soon as you save.</span>
-      <button type="submit" class="btn btn-emerald" id="settings-save">Save settings</button>
+      <span class="msg" id="settings-msg"></span>
+      <button type="submit" class="btn btn-emerald" id="settings-save">Save</button>
     </div>`;
 
   form.querySelectorAll('input[type=file][data-img]').forEach(fi => {
@@ -791,14 +786,14 @@ function renderSettingsForm() {
     });
 
     const res = await fetch('/api/admin/settings', { method: 'PUT', body: fd });
-    btn.disabled = false; btn.textContent = 'Save settings';
+    btn.disabled = false; btn.textContent = 'Save';
     if (res.ok) {
       settings = await res.json();
       renderSettingsForm();
-      toast('Settings saved — changes are live');
+      toast('Saved');
     } else {
       msg.className = 'msg err';
-      msg.textContent = 'Save failed — please try again.';
+      msg.textContent = 'Save failed, try again.';
     }
   };
 }

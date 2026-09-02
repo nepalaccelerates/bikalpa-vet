@@ -8,3 +8,5 @@ public/uploads/*
 .env
 .vercel
 .DS_Store
+
+.claude/

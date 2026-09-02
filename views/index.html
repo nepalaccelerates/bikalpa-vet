@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>{{site_title}}</title>
 <meta name="description" content="{{site_description}}" />
-<meta name="theme-color" content="#FAFAF7" />
+<meta name="theme-color" content="#F7F1E6" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="{{site_title}}" />
 <meta property="og:description" content="{{site_description}}" />
@@ -14,7 +14,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css" />
 <link rel="icon" href="{{logo}}" />
 </head>
@@ -65,14 +65,13 @@
 <section class="hero">
   <div class="hero-grid {{hero_grid_class}}">
     <div class="hero-copy">
-      <span class="stamp" aria-hidden="true">{{hero_badge}}</span>
+      <span class="eyebrow">{{hero_badge}}</span>
       <h1>{{hero_heading}} <em class="swirl">{{hero_accent}}</em></h1>
       <p class="lede">{{hero_text}}</p>
       <div class="hero-cta">
         <a href="{{{tel_primary}}}" class="btn btn-accent btn-lg">Call us now</a>
-        <a href="#services" class="text-link">Explore services</a>
+        <a href="{{{tel_primary}}}" class="hero-phone">{{phone_primary}}</a>
       </div>
-      <p class="hero-note"><strong>{{hero_card_title}}.</strong> {{hero_card_text}}</p>
       <dl class="hero-meta">
         {{{stats_html}}}
       </dl>

@@ -34,7 +34,7 @@ const DEFAULT_SETTINGS = {
   hero_badge: 'Walk-ins welcome',
   hero_card_title: 'No appointment needed',
   hero_card_text: 'Walk in or call. We are here.',
-  hero_image: '',
+  hero_image: '/images/doctor.jpg',
   stat1_value: '5,000+', stat1_label: 'Patients seen',
   stat2_value: '24 / 7', stat2_label: 'On-call vet',
   stat3_value: '3-in-1', stat3_label: 'Clinic · pharmacy · shop',

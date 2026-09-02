@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 
 // Storage drivers:
@@ -14,7 +15,11 @@ const STORE_PATH = path.join(DATA_DIR, 'db.json');
 const SEED_PATH = path.join(__dirname, 'data', 'seed.json');
 const UPLOADS_DIR = isVercel ? '/tmp/uploads' : path.join(__dirname, 'public', 'uploads');
 
-const DB_BLOB_PATH = 'db.json';
+// Blob stores serve objects publicly by URL, so the database lives at a
+// pathname derived from the store token — unguessable without it.
+const DB_BLOB_PATH = useBlob
+  ? 'db/' + crypto.createHash('sha256').update(process.env.BLOB_READ_WRITE_TOKEN).digest('hex').slice(0, 40) + '.json'
+  : null;
 const CACHE_TTL = 15 * 1000;
 
 const DEFAULT_SETTINGS = {
@@ -84,10 +89,11 @@ function ensureAdmin(db) {
 async function persist() {
   if (useBlob) {
     await blob.put(DB_BLOB_PATH, JSON.stringify(cache, null, 2), {
-      access: 'private',
+      access: 'public',
       addRandomSuffix: false,
       allowOverwrite: true,
-      contentType: 'application/json'
+      contentType: 'application/json',
+      cacheControlMaxAge: 60
     });
   } else {
     fs.writeFileSync(STORE_PATH, JSON.stringify(cache, null, 2));
@@ -98,7 +104,7 @@ async function persist() {
 async function load(force = false) {
   if (cache && !force && (!useBlob || Date.now() - lastFetch < CACHE_TTL)) return cache;
   if (useBlob) {
-    const result = await blob.get(DB_BLOB_PATH, { access: 'private', useCache: false });
+    const result = await blob.get(DB_BLOB_PATH, { access: 'public', useCache: false });
     if (result && result.statusCode === 200) {
       cache = JSON.parse(await new Response(result.stream).text());
       lastFetch = Date.now();

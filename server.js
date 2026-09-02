@@ -229,16 +229,16 @@ async function buildIndexTokens() {
   const stats = [1, 2, 3]
     .map(n => ({ value: s[`stat${n}_value`], label: s[`stat${n}_label`] }))
     .filter(st => st.value)
-    .map(st => `<div class="hero-meta-item"><strong>${escapeHtml(st.value)}</strong><span>${escapeHtml(st.label)}</span></div>`)
+    .map(st => `<div class="hero-meta-item"><dt>${escapeHtml(st.label)}</dt><dd>${escapeHtml(st.value)}</dd></div>`)
     .join('\n');
 
   const trust = String(s.trust_items || '').split('\n').map(t => t.trim()).filter(Boolean)
-    .map(t => `<span class="trust-item"><span data-icon="check"></span> ${escapeHtml(t)}</span>`)
+    .map(t => `<span class="trust-item">${escapeHtml(t)}</span>`)
     .join('\n');
 
   const heroVisual = s.hero_image
-    ? `<div class="hero-arch"><img src="${escapeHtml(s.hero_image)}" alt="" class="hero-photo"/></div>`
-    : '<div class="hero-arch hero-paws"><span data-icon="paw"></span></div>';
+    ? `<figure class="hero-visual"><img src="${escapeHtml(s.hero_image)}" alt="" class="hero-photo"/></figure>`
+    : '';
 
   const backupRow = s.phone_backup ? `
     <div class="contact-row">
@@ -277,6 +277,7 @@ async function buildIndexTokens() {
     stats_html: stats,
     trust_html: trust,
     hero_visual_html: heroVisual,
+    hero_grid_class: s.hero_image ? 'two' : '',
     contact_backup_html: backupRow,
     whatsapp_html: whatsapp,
     credit_html: credit

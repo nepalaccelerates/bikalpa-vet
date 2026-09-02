@@ -10,3 +10,5 @@ public/uploads/*
 .DS_Store
 
 .claude/
+PRODUCT.md
+DESIGN.md

@@ -5,11 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 <title>{{site_title}}</title>
 <meta name="description" content="{{site_description}}" />
-<meta name="theme-color" content="#4a140d" />
+<meta name="theme-color" content="#FAFAF7" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{site_title}}" />
+<meta property="og:description" content="{{site_description}}" />
+<meta property="og:image" content="https://bikalpa-vet.vercel.app/images/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/style.css" />
 <link rel="icon" href="{{logo}}" />
 </head>
@@ -17,24 +22,22 @@
 
 <div class="topbar">
   <div class="topbar-inner">
-    <div class="topbar-left">
-      <a href="mailto:{{email}}" class="topbar-item"><span class="tb-ico" data-icon="mail"></span>{{email}}</a>
-      <a href="{{{tel_primary}}}" class="topbar-item"><span class="tb-ico" data-icon="phone"></span>{{phone_primary}}</a>
-    </div>
-    <span class="topbar-item"><span class="tb-ico" data-icon="clock"></span>{{hours_main}}</span>
+    <a href="mailto:{{email}}" class="topbar-item">{{email}}</a>
+    <a href="{{{tel_primary}}}" class="topbar-item">{{phone_primary}}</a>
+    <span class="topbar-item topbar-hours">{{hours_main}}</span>
   </div>
 </div>
 
 <header class="nav">
   <div class="nav-inner">
     <a href="#" class="brand" aria-label="{{clinic_name}}">
-      <img src="{{logo}}" alt="{{clinic_name}} logo" class="brand-logo" />
+      <img src="{{logo}}" alt="" class="brand-logo" />
       <div class="brand-text">
         <strong>{{clinic_name}}</strong>
         <small>{{clinic_subtitle}}</small>
       </div>
     </a>
-    <nav class="nav-links">
+    <nav class="nav-links" aria-label="Main">
       <a href="#services">Services</a>
       <a href="#shop">Pharmacy &amp; Shop</a>
       <a href="#doctor">Our Vet</a>
@@ -42,7 +45,7 @@
       <a href="#contact">Visit</a>
     </nav>
     <div class="nav-cta">
-      <a href="{{{tel_primary}}}" class="btn btn-gold">Call now</a>
+      <a href="{{{tel_primary}}}" class="btn btn-accent">Call now</a>
       <button class="menu-toggle" id="menu-toggle" aria-label="Menu"><span data-icon="menu"></span></button>
     </div>
   </div>
@@ -55,33 +58,26 @@
   <a href="#doctor">Our Vet</a>
   <a href="#blog">Journal</a>
   <a href="#contact">Visit</a>
-  <a href="{{{tel_primary}}}" class="btn btn-gold">Call now</a>
+  <a href="{{{tel_primary}}}" class="btn btn-accent">Call now</a>
 </div>
 
+<main>
 <section class="hero">
-  <div class="hero-grid">
+  <div class="hero-grid {{hero_grid_class}}">
     <div class="hero-copy">
-      <span class="badge-pill"><span data-icon="paw"></span> {{hero_badge}}</span>
-      <h1>{{hero_heading}} <span class="swirl">{{hero_accent}}</span></h1>
+      <span class="stamp" aria-hidden="true">{{hero_badge}}</span>
+      <h1>{{hero_heading}} <em class="swirl">{{hero_accent}}</em></h1>
       <p class="lede">{{hero_text}}</p>
       <div class="hero-cta">
-        <a href="{{{tel_primary}}}" class="btn btn-gold btn-lg">Call us now <span class="arr" data-icon="arrow"></span></a>
-        <a href="#services" class="btn btn-outline btn-lg">Explore services</a>
+        <a href="{{{tel_primary}}}" class="btn btn-accent btn-lg">Call us now</a>
+        <a href="#services" class="text-link">Explore services</a>
       </div>
-      <div class="hero-meta">
+      <p class="hero-note"><strong>{{hero_card_title}}.</strong> {{hero_card_text}}</p>
+      <dl class="hero-meta">
         {{{stats_html}}}
-      </div>
+      </dl>
     </div>
-    <div class="hero-visual">
-      {{{hero_visual_html}}}
-      <div class="hv-card">
-        <div class="hv-card-icon"><span data-icon="heart"></span></div>
-        <div class="hv-card-text">
-          <strong>{{hero_card_title}}</strong>
-          <span>{{hero_card_text}}</span>
-        </div>
-      </div>
-    </div>
+    {{{hero_visual_html}}}
   </div>
 </section>
 
@@ -92,17 +88,19 @@
 </div>
 
 <section class="section" id="services">
-  <div class="section-head">
-    <span class="badge-pill"><span data-icon="paw"></span> What we do</span>
-    <h2>The full spectrum, for dogs and cats.</h2>
-    <p>From the first puppy visit to the most complex surgery, every part of your pet's care in one practice.</p>
-  </div>
-  <div class="services-grid" id="services-grid">
-    <div class="loading">Loading services…</div>
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="field-label">What we do</span>
+      <h2>The full spectrum, for dogs and cats.</h2>
+      <p>From the first puppy visit to the most complex surgery, every part of your pet's care in one practice.</p>
+    </div>
+    <div class="services-grid" id="services-grid">
+      <div class="loading">Loading services…</div>
+    </div>
   </div>
 </section>
 
-<section class="doctor-band" id="doctor">
+<section class="section section-alt" id="doctor">
   <div class="section-inner">
     <div class="doctor">
       <div class="doctor-visual">
@@ -110,7 +108,7 @@
         <span class="badge">{{doctor_title}}</span>
       </div>
       <div class="doctor-copy">
-        <span class="badge-pill on-dark"><span data-icon="paw"></span> Behind the practice</span>
+        <span class="field-label">Behind the practice</span>
         <h2>{{doctor_heading}}</h2>
         {{{doctor_bio_html}}}
         <div class="doctor-sig">
@@ -122,18 +120,16 @@
   </div>
 </section>
 
-<section class="section section-cream" id="shop">
+<section class="section" id="shop">
   <div class="section-inner">
     <div class="section-head">
-      <span class="badge-pill"><span data-icon="paw"></span> Pharmacy &amp; pet shop</span>
+      <span class="field-label">Pharmacy &amp; pet shop</span>
       <h2>Everything you need, on one shelf.</h2>
       <p>Vaccines, medication, parasite control, premium pet food, accessories and litter, stocked by people who know what your pet needs.</p>
     </div>
-    <div class="tabs-wrap">
-      <div class="tabs" role="tablist">
-        <button class="tab-btn active" data-tab="pharmacy">Pharmacy</button>
-        <button class="tab-btn" data-tab="petshop">Pet Shop</button>
-      </div>
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="pharmacy">Pharmacy</button>
+      <button class="tab-btn" data-tab="petshop">Pet Shop</button>
     </div>
     <div class="products-grid" id="products-grid">
       <div class="loading">Loading products…</div>
@@ -141,30 +137,29 @@
   </div>
 </section>
 
-<section class="section" id="blog">
-  <div class="section-head">
-    <span class="badge-pill"><span data-icon="paw"></span> Journal</span>
-    <h2>Notes from the practice.</h2>
-    <p>Honest writing on the questions owners ask us most often.</p>
-  </div>
-  <div class="blog-grid" id="blog-grid">
-    <div class="loading">Loading articles…</div>
+<section class="section section-alt" id="blog">
+  <div class="section-inner">
+    <div class="section-head">
+      <span class="field-label">Journal</span>
+      <h2>Notes from the practice.</h2>
+      <p>Honest writing on the questions owners ask us most often.</p>
+    </div>
+    <div class="blog-grid" id="blog-grid">
+      <div class="loading">Loading articles…</div>
+    </div>
   </div>
 </section>
 
-<section class="section section-cream" id="contact">
+<section class="section" id="contact">
   <div class="section-inner contact-compact">
     <div class="contact-top">
       <div>
-        <span class="badge-pill"><span data-icon="paw"></span> Visit us</span>
+        <span class="field-label">Visit us</span>
         <h2>Walk in or call.<br/>No appointment needed.</h2>
       </div>
       <a href="{{{tel_primary}}}" class="btn-call">
-        <span class="btn-call-icon" data-icon="phone"></span>
-        <div>
-          <strong>{{phone_primary}}</strong>
-          <span>{{phone_primary_name}}</span>
-        </div>
+        <strong>{{phone_primary}}</strong>
+        <span>{{phone_primary_name}}</span>
       </a>
     </div>
     <div class="contact-bottom">
@@ -189,12 +184,13 @@
     </div>
   </div>
 </section>
+</main>
 
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-brand">
       <a href="#" class="brand">
-        <img src="{{logo}}" alt="{{clinic_name}} logo" class="brand-logo" />
+        <img src="{{logo}}" alt="" class="brand-logo" />
         <div class="brand-text">
           <strong>{{clinic_name}}</strong>
           <small>{{clinic_subtitle}}</small>

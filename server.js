@@ -237,15 +237,8 @@ async function buildIndexTokens() {
     .join('\n');
 
   const heroVisual = s.hero_image
-    ? `<img src="${escapeHtml(s.hero_image)}" alt="" class="hero-photo"/>`
-    : '<canvas id="hero-canvas"></canvas>';
-
-  const heroScripts = s.hero_image ? '' : [
-    '<script type="importmap">',
-    '{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }',
-    '</script>',
-    '<script type="module" src="/js/three-scene.js"></script>'
-  ].join('\n');
+    ? `<div class="hero-arch"><img src="${escapeHtml(s.hero_image)}" alt="" class="hero-photo"/></div>`
+    : '<div class="hero-arch hero-paws"><span data-icon="paw"></span></div>';
 
   const backupRow = s.phone_backup ? `
     <div class="contact-row">
@@ -284,7 +277,6 @@ async function buildIndexTokens() {
     stats_html: stats,
     trust_html: trust,
     hero_visual_html: heroVisual,
-    hero_scripts_html: heroScripts,
     contact_backup_html: backupRow,
     whatsapp_html: whatsapp,
     credit_html: credit

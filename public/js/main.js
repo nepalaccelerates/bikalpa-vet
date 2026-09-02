@@ -90,11 +90,11 @@ async function loadProducts(tab) {
   }
   const items = productsState.cache[tab];
   if (!items.length) { grid.innerHTML = '<div class="loading">Nothing here yet.</div>'; return; }
-  grid.innerHTML = items.map(p => {
+  grid.innerHTML = items.map((p, i) => {
     const isRx = (p.stock || '').toLowerCase().includes('prescription');
     const placeholderIcon = tab === 'pharmacy' ? 'pill' : 'bag';
     return `
-      <article class="product-card reveal">
+      <article class="product-card tint-${i % 4} reveal">
         <div class="product-image">
           ${p.image
             ? `<img src="${p.image}" alt="${esc(p.name)}" loading="lazy"/>`

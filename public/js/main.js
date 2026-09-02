@@ -20,6 +20,13 @@ if (mt && mm) {
   mm.querySelectorAll('a').forEach(a => a.onclick = () => mm.classList.remove('open'));
 }
 
+const waFab = document.getElementById('wa-fab');
+const waPopup = document.getElementById('wa-popup');
+if (waFab && waPopup) {
+  waFab.onclick = () => { waPopup.hidden = !waPopup.hidden; };
+  document.getElementById('wa-close').onclick = () => { waPopup.hidden = true; };
+}
+
 function initReveal() {
   const obs = new IntersectionObserver((entries) => {
     entries.forEach(e => {

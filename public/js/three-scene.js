@@ -64,17 +64,14 @@ if (canvas && window.WebGLRenderingContext) {
       varying vec3 vPos;
 
       void main() {
-        // vertical gradient navy -> emerald
         float t = clamp((vPos.y + 1.0) * 0.5, 0.0, 1.0);
         vec3 base = mix(uNavy, uEmerald, smoothstep(0.0, 1.0, t));
         base = mix(base, uMid, 0.18);
 
-        // fresnel rim light
         vec3 viewDir = normalize(-vPos);
         float fresnel = pow(1.0 - max(dot(vNormal, viewDir), 0.0), 2.5);
         base += uHigh * fresnel * 0.55;
 
-        // soft sheen sweep
         float sheen = sin(vPos.x * 2.5 + uTime * 0.6) * 0.5 + 0.5;
         base += vec3(sheen * 0.04);
 
